@@ -1,30 +1,22 @@
 class UsersController < ApplicationController
 
-  def signup
+  def create
     byebug
-    user = User.new(user_params)
+    user = User.create(user_params)
 
     if user.valid?
-      user.save
       token = encode_token({ user_id: user.id })
 
-      render json: { user: user, token: token },
-        except: [:created_at, :updated_at, :password_digest],
-        include: [
-          :invitations,
-          :watchparties,
-          :friends => {
-            except: [:created_at, :updated_at, :password_digest]
-          },
-          :user_leagues => {
-            only: [:id],
-            include: [
-              :league => { except: [:created_at, :updated_at] }
-            ]
-          }]
+      render json: { user: user }, status: :created
     else
-      render json: { error: user.errors }
+      render json: { error: user.errors }, status: :not_acceptable
     end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :username, :password)
   end
 
 end
