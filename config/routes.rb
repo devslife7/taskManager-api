@@ -3,9 +3,8 @@ Rails.application.routes.draw do
   resources :tasks
   resources :user_projects
   resources :projects
-  resources :users
+  resources :users, only: [:create]
 
-  post '/signup', to: 'users#create'
   # post '/login', to: 'auth#login'
 
 end
