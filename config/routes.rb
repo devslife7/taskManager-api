@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   # resources :user_projects
   # resources :projects
   resources :users, only: [:create]
-
   post '/login', to: 'auth#login'
 
 end

@@ -7,40 +7,45 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 UserProject.destroy_all
+UserTask.destroy_all
+Task.destroy_all
 User.destroy_all
 Project.destroy_all
-Task.destroy_all
 
 user = User.create(
-  first_name: "Marcos",
-  last_name: "Velasco",
-  username: "marcos123",
-  password_digest: "asdfasdf"
+  first_name: "Nick",
+  last_name: "Smith",
+  username: "nick123",
+  password: "password"
 )
 
-project = Project.create(
-  name: "Project1",
-  description: "Make a taskManager prototype",
-  start_date: "09/26/2020",
-  deadline: "10/02/2020",
-  completion_percentage: "0%"
-)
-
-user.projects << project
-
-taskNumber = 0
-
-3.times do 
-  Task.create(
-    name: "task#{taskNumber}",
-    start_date: "09/2#{7 + taskNumber}/2020",
-    end_date: "10/2/2020",
-    hours: "40hrs",
-    completion_percentage: "0%",
-    notes: "every #{taskNumber} task has notes",
-    project_id: project.id
+proj_count = 0
+3.times do
+  project = Project.create(
+    name: "Project#{proj_count}",
+    description: "Make a taskManager prototype",
+    start_date: "09/2#{5 + proj_count}/2020",
+    deadline: "10/0#{2 + proj_count}/2020",
+    completion_percentage: "0%"
   )
-  taskNumber += 1
+  user.projects << project
+  proj_count += 1
 end
 
+project1 = Project.first
+task_count = 0
+5.times do
+  task = Task.create(
+    name: "task#{task_count}",
+    start_date: "09/2#{4 + task_count}/2020",
+    end_date: "10/#{2 + task_count}/2020",
+    hours: "40hrs",
+    completion_percentage: "0%",
+    notes: "every #{task_count} task has notes",
+    project_id: project1.id
+  )
+  project1.tasks << task
+  task_count += 1
+end
 
+puts "Succesfull Seed"
