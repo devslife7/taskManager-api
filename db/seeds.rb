@@ -45,6 +45,7 @@ task_count = 0
     project_id: project1.id
   )
   project1.tasks << task
+  user.tasks << task
   task_count += 1
 end
 
