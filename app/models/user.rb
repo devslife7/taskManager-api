@@ -6,7 +6,8 @@ class User < ApplicationRecord
   has_many :user_tasks
   has_many :tasks, :through => :user_tasks
 
-  validates :name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
   validates :password, presence: true
   validates :username, presence: true, uniqueness: { case_sensitive: false }
 end
