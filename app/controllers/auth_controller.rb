@@ -6,7 +6,7 @@ class AuthController < ApplicationController
 
     if user && user.authenticate(user_login_params[:password])
       token = encode_token({ user_id: user.id })
-      render json: { user: user, jwt: token },
+      render json: { user: user, token: token },
         except: [:created_at, :updated_at, :password_digest],
         status: :accepted
     else

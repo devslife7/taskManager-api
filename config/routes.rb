@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # resources :tasks
   # resources :user_projects
   # resources :projects
-  resources :users, only: [:create]
+  resources :users, only: [:create, :show]
   post '/login', to: 'auth#login'
 
 end
