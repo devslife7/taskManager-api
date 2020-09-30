@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: MyString
+  completion_percentage: MyString
+  notes: MyString
+  task: one
+  user: one
+
+two:
+  date: MyString
+  completion_percentage: MyString
+  notes: MyString
+  task: two
+  user: two

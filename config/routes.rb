@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :entries
   # resources :user_tasks
   resources :tasks, only: [:show]
   # resources :user_projects
