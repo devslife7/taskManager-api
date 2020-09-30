@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_many :projects, :through => :user_projects
   has_many :user_tasks
   has_many :tasks, :through => :user_tasks
+  has_many :entries
+  # has_many :tasks, :through => :entries
 
   validates :first_name, presence: true
   validates :last_name, presence: true
