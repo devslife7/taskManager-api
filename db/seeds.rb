@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Entry.destroy_all
 UserProject.destroy_all
 UserTask.destroy_all
 Task.destroy_all
@@ -47,6 +48,19 @@ task_count = 0
   project1.tasks << task
   user.tasks << task
   task_count += 1
+end
+
+task1 = Task.first
+entry_count = 0
+3.times do
+  entry = Entry.create(
+    date: "10/2#{entry_count}/2020",
+    notes: "Entry random notes",
+    completion_percentage: "0%",
+  )
+  task1.entries << entry
+  user.entries << entry
+  entry_count += 1
 end
 
 puts "Succesfull Seed"
