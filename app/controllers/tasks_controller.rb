@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  skip_before_action :authorized, only: [:show, :create]
+  skip_before_action :authorized, only: [:show, :create, :destroy]
 
   def show
     task = Task.find_by(id: params[:id])
@@ -18,6 +18,17 @@ class TasksController < ApplicationController
       render json: task
     else
       render json: task
+    end
+  end
+
+  def destroy
+    task = Task.find_by(id: params[:id])
+
+    if task
+      task.destroy
+      render json: task.id
+    else
+      render json: { error: "Task could not be found"}
     end
   end
 
