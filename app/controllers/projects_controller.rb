@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   def index
     projects = Project.all
 
-    render json: projects, include: [:tasks]
+    render json: projects, include: [:milestones]
   end
 
   def show
