@@ -10,8 +10,8 @@ class ProjectsController < ApplicationController
   def show
     project = Project.find_by(id: params[:id])
 
-    if project.valid?
-      render json: project, include: [:tasks]
+    if project
+      render json: project, include: [:milestones]
     else
       render json: { error: "Project could not be found"}
     end
