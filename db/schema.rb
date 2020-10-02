@@ -10,44 +10,63 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_30_173537) do
+ActiveRecord::Schema.define(version: 2020_10_01_230749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "entries", force: :cascade do |t|
     t.string "date"
-    t.string "completion_percentage"
+    t.integer "progress"
     t.string "notes"
     t.bigint "task_id", null: false
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["task_id"], name: "index_entries_on_task_id"
-    t.index ["user_id"], name: "index_entries_on_user_id"
+  end
+
+  create_table "milestones", force: :cascade do |t|
+    t.string "name"
+    t.integer "progress"
+    t.integer "hours"
+    t.string "start_date"
+    t.string "end_date"
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_milestones_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
+    t.integer "progress"
     t.string "description"
     t.string "start_date"
-    t.string "deadline"
-    t.string "completion_percentage"
+    t.string "end_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
+    t.integer "progress"
+    t.integer "hours"
+    t.string "notes"
     t.string "start_date"
     t.string "end_date"
-    t.string "hours"
-    t.string "completion_percentage"
-    t.string "notes"
-    t.bigint "project_id", null: false
+    t.bigint "milestone_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.index ["milestone_id"], name: "index_tasks_on_milestone_id"
+  end
+
+  create_table "user_entries", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "entry_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["entry_id"], name: "index_user_entries_on_entry_id"
+    t.index ["user_id"], name: "index_user_entries_on_user_id"
   end
 
   create_table "user_projects", force: :cascade do |t|
@@ -78,8 +97,10 @@ ActiveRecord::Schema.define(version: 2020_09_30_173537) do
   end
 
   add_foreign_key "entries", "tasks"
-  add_foreign_key "entries", "users"
-  add_foreign_key "tasks", "projects"
+  add_foreign_key "milestones", "projects"
+  add_foreign_key "tasks", "milestones"
+  add_foreign_key "user_entries", "entries"
+  add_foreign_key "user_entries", "users"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"
   add_foreign_key "user_tasks", "tasks"

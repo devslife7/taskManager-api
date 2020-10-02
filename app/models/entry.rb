@@ -1,4 +1,5 @@
 class Entry < ApplicationRecord
   belongs_to :task
-  belongs_to :user
+  has_many :user_entries
+  has_many :users, :through => :user_entries
 end

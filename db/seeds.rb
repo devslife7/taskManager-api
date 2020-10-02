@@ -5,62 +5,75 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
 
 Entry.destroy_all
 UserProject.destroy_all
 UserTask.destroy_all
 Task.destroy_all
 User.destroy_all
+Milestone.destroy_all
 Project.destroy_all
 
 user = User.create(
-  first_name: "Nick",
-  last_name: "Smith",
-  username: "nick123",
+  first_name: "Mike",
+  last_name: "Jones",
+  username: "mike123",
   password: "password"
 )
 
-proj_count = 0
-3.times do
-  project = Project.create(
-    name: "Project#{proj_count}",
-    description: "Make a taskManager prototype",
-    start_date: "09/2#{5 + proj_count}/2020",
-    deadline: "10/0#{2 + proj_count}/2020",
-    completion_percentage: "0%"
-  )
-  user.projects << project
-  proj_count += 1
-end
-
-project1 = Project.first
-task_count = 0
 5.times do
-  task = Task.create(
-    name: "task#{task_count}",
-    start_date: "09/2#{4 + task_count}/2020",
-    end_date: "10/#{2 + task_count}/2020",
-    hours: "40hrs",
-    completion_percentage: "0%",
-    notes: "every #{task_count} task has notes",
-    project_id: project1.id
+  proj = Project.create(
+    name: "#{Faker::Space.unique.nasa_space_craft} Project",
+    description: Faker::Hacker.unique.say_something_smart,
+    start_date: Faker::Date.between(from: '2020-01-01', to: '2020-06-01'),
+    end_date: Faker::Date.between(from: '2020-06-02', to: '2020-12-29'),
+    progress: 0
   )
-  project1.tasks << task
-  user.tasks << task
-  task_count += 1
+  user.projects << proj
 end
 
-task1 = Task.first
-entry_count = 0
-3.times do
-  entry = Entry.create(
-    date: "10/2#{entry_count}/2020",
-    notes: "Entry random notes",
-    completion_percentage: "0%",
-  )
-  task1.entries << entry
-  user.entries << entry
-  entry_count += 1
+user.projects.each do |project|
+  5.times do
+    milestone = Milestone.create(
+      name: "#{Faker::Space.unique.meteorite} Milestone",
+      progress: 0,
+      hours: 0,
+      start_date: Faker::Date.between(from: '2020-01-01', to: '2020-06-01'),
+      end_date: Faker::Date.between(from: '2020-06-02', to: '2020-12-29'),
+      project_id: project.id
+    )
+    project.milestones << milestone
+  end
+end
+
+Milestone.all.each do |milestone|
+  5.times do
+    task = Task.create(
+      name: "#{Faker::Science.element} Task",
+      progress: 0,
+      hours: rand(20..40),
+      notes: Faker::Lorem.sentence,
+      start_date: Faker::Date.between(from: '2020-01-01', to: '2020-06-01'),
+      end_date: Faker::Date.between(from: '2020-06-02', to: '2020-12-29'),
+      milestone_id: milestone.id
+    )
+    milestone.tasks << task
+  end
+end
+
+progress = [5,10,15,20,25,30,35,40]
+
+Task.all.each do |task|
+  5.times do
+    entry = Entry.create(
+      date: Faker::Date.between(from: '2020-09-01', to: '2020-10-29'),
+      progress: progress.sample,
+      notes: Faker::Lorem.sentence,
+      task_id: task.id
+    )
+    task.entries << entry
+  end
 end
 
 puts "Succesfull Seed"
