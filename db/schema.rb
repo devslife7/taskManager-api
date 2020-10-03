@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_230749) do
   enable_extension "plpgsql"
 
   create_table "entries", force: :cascade do |t|
-    t.string "date"
+    t.integer "date"
     t.integer "progress"
     t.string "notes"
     t.bigint "task_id", null: false
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 2020_10_01_230749) do
     t.string "name"
     t.integer "progress"
     t.integer "hours"
-    t.string "start_date"
-    t.string "end_date"
+    t.integer "start_date"
+    t.integer "end_date"
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(version: 2020_10_01_230749) do
     t.string "name"
     t.integer "progress"
     t.string "description"
-    t.string "start_date"
-    t.string "end_date"
+    t.integer "start_date"
+    t.integer "end_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 2020_10_01_230749) do
     t.integer "progress"
     t.integer "hours"
     t.string "notes"
-    t.string "start_date"
-    t.string "end_date"
+    t.integer "start_date"
+    t.integer "end_date"
     t.bigint "milestone_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

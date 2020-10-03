@@ -5,8 +5,8 @@ class CreateTasks < ActiveRecord::Migration[6.0]
       t.integer :progress
       t.integer :hours
       t.string :notes
-      t.string :start_date
-      t.string :end_date
+      t.integer :start_date
+      t.integer :end_date
       t.references :milestone, null: false, foreign_key: true
 
       t.timestamps

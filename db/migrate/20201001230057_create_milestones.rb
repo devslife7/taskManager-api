@@ -4,8 +4,8 @@ class CreateMilestones < ActiveRecord::Migration[6.0]
       t.string :name
       t.integer :progress
       t.integer :hours
-      t.string :start_date
-      t.string :end_date
+      t.integer :start_date
+      t.integer :end_date
       t.references :project, null: false, foreign_key: true
 
       t.timestamps

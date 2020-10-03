@@ -16,9 +16,9 @@ Milestone.destroy_all
 Project.destroy_all
 
 user = User.create(
-  first_name: "Jake",
-  last_name: "Smith",
-  username: "jake123",
+  first_name: "Marcos",
+  last_name: "Velasco",
+  username: "admin",
   password: "password"
 )
 
