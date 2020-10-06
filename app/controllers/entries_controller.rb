@@ -3,15 +3,15 @@ class EntriesController < ApplicationController
 
   def create
     entry = Entry.create(entry_params)
-
-    entry.update_tree
-
-
-    # byebug
-
+    entry.update_progress_tree
 
     if entry
-      render json: entry
+      render json: {
+        entry: entry,
+        task_progress: entry.task.progress,
+        milestone_progress: entry.task.milestone.progress,
+        project_progress: entry.task.milstone.project.progress
+      }
     else
       render json: { error: "Entry could not be created"}
     end
