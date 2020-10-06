@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   def index
     projects = Project.all
 
-    render json: projects
+    render json: projects, only: [:id, :name, :progress, :end_date]
   end
 
   def show

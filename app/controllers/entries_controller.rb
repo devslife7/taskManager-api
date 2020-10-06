@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
         entry: entry,
         task_progress: entry.task.progress,
         milestone_progress: entry.task.milestone.progress,
-        project_progress: entry.task.milstone.project.progress
+        project_progress: entry.task.milestone.project.progress
       }
     else
       render json: { error: "Entry could not be created"}
