@@ -5,12 +5,23 @@ class EntriesController < ApplicationController
     entry = Entry.create(entry_params)
     entry.update_progress_tree
 
+    task = entry.task
+    milestone = task.milestone
+    project = milestone.project
+
     if entry
       render json: {
         entry: entry,
-        task_progress: entry.task.progress,
-        milestone_progress: entry.task.milestone.progress,
-        project_progress: entry.task.milestone.project.progress
+        projectUpdates: {
+          project_progress: project.progress,
+          milestone_progress: milestone.progress,
+          milestone_id: milestone.id,
+        },
+        milestoneUpdates: {
+          milestone_progress: milestone.progress,
+          task_progress: task.progress,
+          task_id: task.id,
+        }
       }
     else
       render json: { error: "Entry could not be created"}
