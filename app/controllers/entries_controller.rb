@@ -12,16 +12,9 @@ class EntriesController < ApplicationController
     if entry
       render json: {
         entry: entry,
-        projectUpdates: {
-          project_progress: project.progress,
-          milestone_progress: milestone.progress,
-          milestone_id: milestone.id,
-        },
-        milestoneUpdates: {
-          milestone_progress: milestone.progress,
-          task_progress: task.progress,
-          task_id: task.id,
-        }
+        project_progress: project.progress,
+        milestone_progress: milestone.progress,
+        task_progress: task.progress,
       }
     else
       render json: { error: "Entry could not be created"}
