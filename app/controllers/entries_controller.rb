@@ -26,7 +26,7 @@ class EntriesController < ApplicationController
     
     if entry
       entry.destroy
-      render json: entry.id
+      render json: { deleted_entry_id: entry.id }
     else
       render json: { error: "Entry could not be found"}
     end
