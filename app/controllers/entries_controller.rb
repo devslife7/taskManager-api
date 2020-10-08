@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  skip_before_action :authorized, only: [:create, :destroy]
+  skip_before_action :authorized, only: [:create, :update, :destroy]
 
   def create
     entry = Entry.create(entry_params)
@@ -21,6 +21,17 @@ class EntriesController < ApplicationController
     end
   end
 
+  def update
+    entry = Entry.find_by(id: params[:id])
+
+    if entry
+      entry.update(update_entry_params)
+      render json: entry
+    else
+      render json: { error: "Entry could not be found"}
+    end
+  end
+
   def destroy
     entry = Entry.find_by(id: params[:id])
     
@@ -36,5 +47,9 @@ class EntriesController < ApplicationController
 
   def entry_params
     params.require(:entry).permit(:date, :progress, :notes, :task_id)
+  end
+
+  def update_entry_params
+    params.require(:entry).permit(:date, :progress, :notes)
   end
 end
