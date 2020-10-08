@@ -12,9 +12,9 @@ class EntriesController < ApplicationController
     if entry
       render json: {
         entry: entry,
-        project_progress: project.progress,
-        milestone_progress: milestone.progress,
-        task_progress: task.progress,
+        task: task,
+        milestone: milestone,
+        project: project
       }
     else
       render json: { error: "Entry could not be created"}
@@ -26,7 +26,8 @@ class EntriesController < ApplicationController
 
     if entry
       entry.update(update_entry_params)
-      render json: entry
+
+      render json: { entry: entry }
     else
       render json: { error: "Entry could not be found"}
     end
@@ -37,7 +38,7 @@ class EntriesController < ApplicationController
     
     if entry
       entry.destroy
-      render json: { deleted_entry_id: entry.id }
+      render json: { entry_id: entry.id }
     else
       render json: { error: "Entry could not be found"}
     end
