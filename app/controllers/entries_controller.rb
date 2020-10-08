@@ -24,10 +24,20 @@ class EntriesController < ApplicationController
   def update
     entry = Entry.find_by(id: params[:id])
 
+    task = entry.task
+    milestone = task.milestone
+    project = milestone.project
+
     if entry
       entry.update(update_entry_params)
+      entry.update_progress_tree
 
-      render json: { entry: entry }
+      render json: {
+        entry: entry,
+        task: task,
+        milestone: milestone,
+        project: project
+      }
     else
       render json: { error: "Entry could not be found"}
     end
@@ -35,10 +45,20 @@ class EntriesController < ApplicationController
 
   def destroy
     entry = Entry.find_by(id: params[:id])
-    
+
+    task = entry.task
+    milestone = task.milestone
+    project = milestone.project
+
     if entry
       entry.destroy
-      render json: { entry_id: entry.id }
+      entry.update_progress_tree
+      render json: {
+        entry_id: entry.id,
+        task: task,
+        milestone: milestone,
+        project: project
+      }
     else
       render json: { error: "Entry could not be found"}
     end
