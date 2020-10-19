@@ -5,7 +5,7 @@ class TasksController < ApplicationController
     task = Task.find_by(id: params[:id])
 
     if task.valid?
-      render json: task, include: [:entries]
+      render json: task, include: [:entries => { include: [:users] }]
     else
       render json: { error: 'Task could not be found'}
     end

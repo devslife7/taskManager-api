@@ -2,6 +2,7 @@ class EntriesController < ApplicationController
   skip_before_action :authorized, only: [:create, :update, :destroy]
 
   def create
+    user = User.find_by(id: params[:user_id])
     entry = Entry.create(entry_params)
     entry.update_progress_tree
 
@@ -10,8 +11,10 @@ class EntriesController < ApplicationController
     project = milestone.project
 
     if entry
+      entry.users << user
+
       render json: {
-        entry: entry,
+        entry: entry.as_json( include: [:users]),
         task: task,
         milestone: milestone,
         project: project
