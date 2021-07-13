@@ -27,6 +27,8 @@ class UsersController < ApplicationController
 
   def update
     user = User.find_by(id: params[:id])
+    
+    byebug
 
     if user
       user.update(update_params)
@@ -44,7 +46,7 @@ class UsersController < ApplicationController
   end
 
   def update_params
-    params.require(:user).permit(:first_name, :last_name)
+    params.require(:user).permit(:first_name, :last_name, :email)
   end
 
 end
