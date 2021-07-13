@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     if user
       user.update(update_params)
       render json: user,
-        except: [:created_at, :updated_at, :password_digest, :role, :username]
+        except: [:created_at, :updated_at, :password_digest]
     else
       render json: { error: 'user not found' }
     end
