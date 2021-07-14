@@ -23,12 +23,16 @@ user = User.create(
   password: "password"
 )
 
+yearBeginning = 1609477200
+yearMiddle = 1622520000
+yearEnd = 1640926800
+
 5.times do
   proj = Project.create(
     name: "#{Faker::Space.unique.nasa_space_craft} Project",
     description: Faker::Hacker.unique.say_something_smart,
-    start_date: rand(1577854800..1590984000),
-    end_date: rand(1590984000..1609390800),
+    start_date: rand(yearBeginning..yearMiddle),
+    end_date: rand(yearMiddle..yearEnd),
     progress: 0
   )
   user.projects << proj
@@ -40,8 +44,8 @@ user.projects.each do |project|
       name: "#{Faker::Space.unique.meteorite} Milestone",
       progress: 0,
       hours: 0,
-      start_date: rand(1577854800..1590984000),
-      end_date: rand(1590984000..1609390800),
+      start_date: rand(yearBeginning..yearMiddle),
+      end_date: rand(yearMiddle..yearEnd),
       project_id: project.id
     )
     project.milestones << milestone
@@ -55,8 +59,8 @@ Milestone.all.each do |milestone|
       progress: 0,
       hours: rand(20..40),
       notes: Faker::Lorem.sentence,
-      start_date: rand(1577854800..1590984000),
-      end_date: rand(1590984000..1609390800),
+      start_date: rand(yearBeginning..yearMiddle),
+      end_date: rand(yearMiddle..yearEnd),
       milestone_id: milestone.id
     )
     milestone.tasks << task
@@ -68,7 +72,7 @@ progress = [5,10,15,20,25,30,35,40]
 Task.all.each do |task|
   5.times do
     entry = Entry.create(
-      date: rand(1590984000..1609390800),
+      date: rand(yearMiddle..yearEnd),
       progress: progress.sample,
       notes: Faker::Lorem.sentence,
       task_id: task.id
