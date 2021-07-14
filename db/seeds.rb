@@ -67,7 +67,7 @@ Milestone.all.each do |milestone|
   end
 end
 
-progress = [5,10,15,20,25,30,35,40]
+progress = [10,20,30,40,50,60,70,80,90,100]
 
 Task.all.each do |task|
   5.times do
@@ -79,6 +79,7 @@ Task.all.each do |task|
     )
     task.entries << entry
   end
+  task.update_progress_tree
 end
 
 puts "Succesfull Seed"

@@ -8,4 +8,20 @@ class Task < ApplicationRecord
     last_entry_progress = self.entries.last.progress
     self.update(progress: last_entry_progress)
   end
+
+  def update_progress_tree
+    
+    # udpate task progress
+    self.update_progress
+
+    # update milestone progress
+    milestone = self.milestone
+    milestone.update_progress
+
+    # update project progress
+    project = milestone.project
+    project.update_progress
+    
+  end
+
 end
