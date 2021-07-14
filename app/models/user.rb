@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :tasks, :through => :user_tasks
   has_many :user_entries
   has_many :entries, :through => :user_entries
+  has_many :reports
+  has_many :projects, :through => :reports
 
   validates :first_name, presence: true
   validates :last_name, presence: true

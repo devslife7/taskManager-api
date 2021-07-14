@@ -18,8 +18,10 @@ class UsersController < ApplicationController
   def show
     user = User.find_by(id: params[:id])
 
+    # byebug
+
     if user
-      render json: user, except: [:created_at, :updated_at, :password_digest], status: :accepted
+      render json: user, except: [:created_at, :updated_at, :password_digest], include: [:reports], status: :accepted
     else
       render json: { error: user.error }, status: :not_acceptable
     end

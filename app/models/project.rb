@@ -1,4 +1,6 @@
 class Project < ApplicationRecord
+  has_many :reports
+  has_many :users, :through => :reports
   has_many :user_projects
   has_many :users, :through => :user_projects
   has_many :milestones
