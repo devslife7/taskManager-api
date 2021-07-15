@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :reports
+  resources :reports, only: [:create]
   resources :entries, only: [:create, :update, :destroy]
   resources :milestones, only: [:show]
   # resources :user_tasks
