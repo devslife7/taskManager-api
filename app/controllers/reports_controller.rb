@@ -5,8 +5,7 @@ class ReportsController < ApplicationController
 
     user = User.find_by(id: report_params[:user_id])
     project = Project.find_by(id: report_params[:project_id])
-    
-    byebug
+
     if user && project
       report = Report.new(report_params)
       if report
@@ -25,6 +24,6 @@ class ReportsController < ApplicationController
   private
   
   def report_params
-    params.require(:report).permit(:user_id, :project_id, :notes)
+    params.require(:report).permit(:user_id, :project_id, :title, :notes)
   end
 end
