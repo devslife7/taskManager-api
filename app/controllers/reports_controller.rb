@@ -1,8 +1,7 @@
 class ReportsController < ApplicationController
-  skip_before_action :authorized, only: [:create]
+  skip_before_action :authorized, only: [:create, :show]
 
   def create
-
     user = User.find_by(id: report_params[:user_id])
     project = Project.find_by(id: report_params[:project_id])
 
@@ -17,12 +16,24 @@ class ReportsController < ApplicationController
     else
       render json: { error: 'User or Report could not be found'}
     end
-
+  end
   
+  def show
+    report = Report.find_by(id: params[:id])
+
+    # byebug
+
+    if report
+      render json: report, include: [:project => { include: [:milestones]}]
+    else
+      render json: { error: 'report could not be found'}
+    end
+    
   end
 
+
   private
-  
+
   def report_params
     params.require(:report).permit(:user_id, :project_id, :title, :notes)
   end
