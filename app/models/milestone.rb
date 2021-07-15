@@ -5,9 +5,9 @@ class Milestone < ApplicationRecord
   def update_progress
     tasks_size = self.tasks.size
 
-    sum = self.tasks.inject(0) {|sum, task| sum + task[:progress]}
-    amount = sum/tasks_size
+    tasks_progress_sum = self.tasks.inject(0) {|sum, task| sum + task[:progress]}
+    updated_progress = tasks_progress_sum/tasks_size
 
-    self.update(progress: amount)
+    self.update(progress: updated_progress)
   end
 end

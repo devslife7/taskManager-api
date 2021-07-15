@@ -8,9 +8,9 @@ class Project < ApplicationRecord
   def update_progress
     milestones_size = self.milestones.size
 
-    sum = self.milestones.inject(0) {|sum, milestone| sum + milestone[:progress]}
-    amount = sum/milestones_size
+    milestones_progress_sum = self.milestones.inject(0) {|sum, milestone| sum + milestone[:progress]}
+    updated_progress = milestones_progress_sum/milestones_size
 
-    self.update(progress: amount)
+    self.update(progress: updated_progress)
   end
 end
