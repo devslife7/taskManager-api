@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  skip_before_action :authorized, only: [:create, :show]
+  skip_before_action :authorized, only: [:create, :show, :destroy]
 
   def create
     user = User.find_by(id: report_params[:user_id])
@@ -21,14 +21,23 @@ class ReportsController < ApplicationController
   def show
     report = Report.find_by(id: params[:id])
 
-    # byebug
-
     if report
       render json: report, include: [:project => { include: [:milestones]}]
     else
       render json: { error: 'report could not be found'}
     end
     
+  end
+
+  def destroy
+    report = Report.find_by(id: params[:id])
+
+    if report
+      report.destroy
+      render json: { deletedReportId: report.id}
+    else
+      render json: { error: "Report could not be found"}
+    end
   end
 
 
