@@ -14,11 +14,11 @@ class EntriesController < ApplicationController
       entry.users << user
 
       render json: {
-        entry: entry.as_json( include: [:users]),
-        task: task,
-        milestone: milestone,
-        project: project
-      }, except: [:created_at, :updated_at]
+        entry: entry.as_json( include: [:users], except: [:created_at, :updated_at]),
+        task: task.as_json( only: [:id, :progress]),
+        milestone: milestone.as_json( only: [:id, :progress]),
+        project: project.as_json( only: [:id, :progress])
+      }
     else
       render json: { error: "Entry could not be created"}
     end
@@ -36,11 +36,11 @@ class EntriesController < ApplicationController
       entry.update_progress_tree
 
       render json: {
-        entry: entry.as_json( include: [:users]),
-        task: task,
-        milestone: milestone,
-        project: project
-      }, except: [:created_at, :updated_at, :name, :end_date, :hours, :project_id, :start_date, :description, :milestone_id]
+        entry: entry.as_json( include: [:users], except: [:created_at, :updated_at]),
+        task: task.as_json( only: [:id, :progress]),
+        milestone: milestone.as_json( only: [:id, :progress]),
+        project: project.as_json( only: [:id, :progress])
+      }
 
 
     else
@@ -58,11 +58,12 @@ class EntriesController < ApplicationController
     if entry
       entry.destroy
       entry.update_progress_tree
+      
       render json: {
         entry_id: entry.id,
-        task: task,
-        milestone: milestone,
-        project: project
+        task: task.as_json( only: [:id, :progress]),
+        milestone: milestone.as_json( only: [:id, :progress]),
+        project: project.as_json( only: [:id, :progress])
       }
     else
       render json: { error: "Entry could not be found"}
