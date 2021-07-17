@@ -18,7 +18,7 @@ class EntriesController < ApplicationController
         task: task,
         milestone: milestone,
         project: project
-      }
+      }, except: [:created_at, :updated_at]
     else
       render json: { error: "Entry could not be created"}
     end
@@ -36,7 +36,7 @@ class EntriesController < ApplicationController
       entry.update_progress_tree
 
       render json: {
-        entry: entry,
+        entry: entry.as_json( include: [:users]),
         task: task,
         milestone: milestone,
         project: project

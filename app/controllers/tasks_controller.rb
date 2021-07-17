@@ -15,9 +15,9 @@ class TasksController < ApplicationController
     task = Task.create(task_params)
 
     if task.valid?
-      render json: task
+      render json: task, except: [:created_at, :updated_at]
     else
-      render json: task
+      render json: { error: 'Task could not be created'}
     end
   end
 
@@ -35,6 +35,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :notes, :hours, :start_date, :end_date, :project_id, :completion_percentage)
+    params.require(:task).permit(:name, :notes, :hours, :start_date, :end_date, :milestone_id, :progress)
   end
+
 end 
