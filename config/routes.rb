@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: [:create, :show, :update]
   resources :projects, only: [:index, :show, :create, :destroy]
   resources :milestones, only: [:show]
-  resources :tasks, only: [:show, :create, :destroy]
+  resources :tasks, only: [:show, :create,:update, :destroy]
   resources :entries, only: [:create, :update, :destroy]
   resources :reports, only: [:create, :show, :destroy]
 

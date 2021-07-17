@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  skip_before_action :authorized, only: [:show, :create, :destroy]
+  skip_before_action :authorized, only: [:show, :create, :update, :destroy]
 
   def show
     task = Task.find_by(id: params[:id])
@@ -29,6 +29,17 @@ class TasksController < ApplicationController
     end
   end
 
+  def update
+    task = Task.find_by(id: params[:id])
+
+    if task
+      task.update(update_task_params)
+      render json: task, except: [:created_at, :updated_at]
+    else 
+      render json: { error: "Task could not be found"}
+    end
+  end
+
   def destroy
     task = Task.find_by(id: params[:id])
 
@@ -44,6 +55,10 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :notes, :hours, :start_date, :end_date, :milestone_id, :progress)
+  end
+
+  def update_task_params
+    params.require(:task).permit(:name, :notes, :hours, :start_date, :end_date, :progress)
   end
 
 end 

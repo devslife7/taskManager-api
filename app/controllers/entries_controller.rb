@@ -41,8 +41,6 @@ class EntriesController < ApplicationController
         milestone: milestone.as_json( only: [:id, :progress]),
         project: project.as_json( only: [:id, :progress])
       }
-
-
     else
       render json: { error: "Entry could not be found"}
     end
@@ -58,7 +56,7 @@ class EntriesController < ApplicationController
     if entry
       entry.destroy
       entry.update_progress_tree
-      
+
       render json: {
         entry_id: entry.id,
         task: task.as_json( only: [:id, :progress]),
