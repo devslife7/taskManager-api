@@ -40,7 +40,9 @@ class EntriesController < ApplicationController
         task: task,
         milestone: milestone,
         project: project
-      }
+      }, except: [:created_at, :updated_at, :name, :end_date, :hours, :project_id, :start_date, :description, :milestone_id]
+
+
     else
       render json: { error: "Entry could not be found"}
     end
