@@ -14,7 +14,6 @@ class Task < ApplicationRecord
   end
 
   def update_progress_tree
-    
     # udpate task progress
     self.update_progress
 
