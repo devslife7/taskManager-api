@@ -1,8 +1,8 @@
 class Task < ApplicationRecord
   belongs_to :milestone
-  has_many :user_tasks
+  has_many :user_tasks, :dependent => :destroy
   has_many :users, :through => :user_tasks
-  has_many :entries
+  has_many :entries, :dependent => :destroy
 
   def update_progress
     if !self.entries.empty?

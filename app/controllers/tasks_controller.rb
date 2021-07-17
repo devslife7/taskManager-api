@@ -34,7 +34,7 @@ class TasksController < ApplicationController
 
     if task
       task.update(update_task_params)
-      render json: task, except: [:created_at, :updated_at]
+      render json: { task: task }, except: [:created_at, :updated_at]
     else 
       render json: { error: "Task could not be found"}
     end
@@ -42,10 +42,18 @@ class TasksController < ApplicationController
 
   def destroy
     task = Task.find_by(id: params[:id])
+    task.update_progress_tree
+
+    milestone = task.milestone
+    project = milestone.project
 
     if task
       task.destroy
-      render json: task.id
+      render json: {
+        task: task.as_json( only: [:id]),
+        milestone: milestone.as_json( only: [:id, :progress]),
+        project: project.as_json( only: [:id, :progress])     
+      }
     else
       render json: { error: "Task could not be found"}
     end
