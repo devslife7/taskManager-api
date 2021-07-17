@@ -5,7 +5,11 @@ class Task < ApplicationRecord
   has_many :entries
 
   def update_progress
-    last_entry_progress = self.entries.last.progress
+    if !self.entries.empty?
+      last_entry_progress = self.entries.last.progress
+    else 
+      last_entry_progress = 0 # when entry array is empty the progress is set to 0
+    end
     self.update(progress: last_entry_progress)
   end
 

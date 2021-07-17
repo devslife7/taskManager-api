@@ -13,9 +13,17 @@ class TasksController < ApplicationController
 
   def create
     task = Task.create(task_params)
+    task.update_progress_tree
+
+    milestone = task.milestone
+    project = milestone.project
 
     if task.valid?
-      render json: task, except: [:created_at, :updated_at]
+      render json: {
+        task: task.as_json( except: [:created_at, :updated_at]),
+        milestone: milestone.as_json( only: [:id, :progress]),
+        project: project.as_json( only: [:id, :progress])
+      }
     else
       render json: { error: 'Task could not be created'}
     end
