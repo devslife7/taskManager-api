@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
 
     if project
       project.update(project_params)
-      render json: { project: project }, except: [:created_at, :updated_at]
+      render json: { project: project }, include: [:milestones], except: [:created_at, :updated_at]
     else
       render json: { error: "Project could not be found" }
     end
