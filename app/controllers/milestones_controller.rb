@@ -39,13 +39,15 @@ class MilestonesController < ApplicationController
   end
 
   def destroy
-    milestone = Task.find_by(id: params[:id])
+    milestone = Milestone.find_by(id: params[:id])
     
     project = milestone.project
-    project.update_progress
 
     if milestone
       milestone.destroy
+
+      project.update_progress
+
       render json: { 
         milestone: milestone.as_json( only: [:id] ),
         project: project.as_json( only: [:id, :progress] )

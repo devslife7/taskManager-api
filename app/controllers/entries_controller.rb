@@ -55,6 +55,7 @@ class EntriesController < ApplicationController
 
     if entry
       entry.destroy
+      
       entry.update_progress_tree
 
       render json: {

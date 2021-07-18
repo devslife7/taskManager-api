@@ -42,13 +42,15 @@ class TasksController < ApplicationController
 
   def destroy
     task = Task.find_by(id: params[:id])
-    task.update_progress_tree
 
     milestone = task.milestone
     project = milestone.project
 
     if task
       task.destroy
+
+      task.update_progress_tree
+      
       render json: {
         task: task.as_json( only: [:id]),
         milestone: milestone.as_json( only: [:id, :progress]),
@@ -62,6 +64,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :notes, :hours, :start_date, :end_date, :milestone_id, :progress)
+    params.require(:task).permit(:name, :notes, :hours, :start_date, :end_date, :milestone_id)
   end
 end 
