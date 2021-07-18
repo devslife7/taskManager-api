@@ -31,8 +31,25 @@ class MilestonesController < ApplicationController
     milestone = Milestone.find_by(id: params[:id])
 
     if milestone
-      milestone.update(update_milestone_params)
+      milestone.update(milestone_params)
       render json: { milestone: milestone }, except: [:created_at, :updated_at]
+    else
+      render json: { error: "Milestone could not be found"}
+    end
+  end
+
+  def destroy
+    milestone = Task.find_by(id: params[:id])
+    
+    project = milestone.project
+    project.update_progress
+
+    if milestone
+      milestone.destroy
+      render json: { 
+        milestone: milestone.as_json( only: [:id] ),
+        project: project.as_json( only: [:id, :progress] )
+      }
     else
       render json: { error: "Milestone could not be found"}
     end
@@ -43,9 +60,4 @@ class MilestonesController < ApplicationController
   def milestone_params
     params.require(:milestone).permit(:name, :start_date, :end_date, :project_id)
   end
-
-  def update_milestone_params
-    params.require(:milestone). permit(:name, :start_date, :end_date)
-  end
-
 end

@@ -33,7 +33,7 @@ class TasksController < ApplicationController
     task = Task.find_by(id: params[:id])
 
     if task
-      task.update(update_task_params)
+      task.update(task_params)
       render json: { task: task }, except: [:created_at, :updated_at]
     else 
       render json: { error: "Task could not be found"}
@@ -64,9 +64,4 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:name, :notes, :hours, :start_date, :end_date, :milestone_id, :progress)
   end
-
-  def update_task_params
-    params.require(:task).permit(:name, :notes, :hours, :start_date, :end_date, :progress)
-  end
-
 end 
