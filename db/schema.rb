@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 2021_07_15_001854) do
 
   create_table "milestones", force: :cascade do |t|
     t.string "name"
-    t.integer "progress"
-    t.integer "hours"
+    t.integer "progress", default: 0
+    t.integer "hours", default: 0
     t.integer "start_date"
     t.integer "end_date"
     t.bigint "project_id", null: false
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2021_07_15_001854) do
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
-    t.integer "progress"
+    t.integer "progress", default: 0
     t.string "description"
     t.integer "start_date"
     t.integer "end_date"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_07_15_001854) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
-    t.integer "progress"
+    t.integer "progress", default: 0
     t.integer "hours"
     t.string "notes"
     t.integer "start_date"
