@@ -21,9 +21,20 @@ class ProjectsController < ApplicationController
     project = Project.create(project_params)
     
     if project.valid?
-      render json: { project: project }, except: [:created_at, :updated_at]
+      render json: { project: project }, include: [:milestones], except: [:created_at, :updated_at]
     else
       render json: { error: "Could not create a new Project"}
+    end
+  end
+
+  def update
+    project = Project.find_by(id: params[:id])
+
+    if project
+      project.update(project_params)
+      render json: { project: project }, except: [:created_at, :updated_at]
+    else
+      render json: { error: "Project could not be found" }
     end
   end
 
