@@ -15,12 +15,19 @@ User.destroy_all
 Milestone.destroy_all
 Project.destroy_all
 
-user = User.create(
+User.create(
   first_name: "Marcos",
   last_name: "Velasco",
   username: "admin",
   role: "admin",
   password: "password"
+)
+user = User.create(
+  first_name: "demo first name",
+  last_name: "demo last name",
+  username: "demo",
+  role: "demo role",
+  password: "demo"
 )
 
 yearBeginning = 1609477200
