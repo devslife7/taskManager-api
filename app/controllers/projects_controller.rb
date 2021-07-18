@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
 
     if project
       project.destroy
-      render json: { id: project.id}
+      render json: { project: project.as_json( only: [:id]) }
     else
       render json: { error: "Project could not be found"}
     end
