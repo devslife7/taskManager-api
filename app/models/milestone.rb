@@ -4,15 +4,10 @@ class Milestone < ApplicationRecord
 
   def update_progress
     task_array = self.tasks
-    tasks_size = task_array.size
+    tasks_size = task_array.size === 0 ? 1 : task_array.size
 
-    if !task_array.empty?
-      tasks_progress_sum = task_array.inject(0) {|sum, task| sum + task[:progress]}
-
-      updated_progress = tasks_progress_sum/tasks_size
-    else
-      updated_progress = 0 #when task array is empty the progress is set to 0
-    end
+    tasks_progress_sum = task_array.inject(0) {|sum, task| sum + task[:progress]}
+    updated_progress = tasks_progress_sum/tasks_size
 
     self.update(progress: updated_progress)
   end
