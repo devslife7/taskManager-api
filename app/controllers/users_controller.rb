@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       user.update(update_params)
       render json: user, except: [:created_at, :updated_at, :password_digest], include: [:reports], status: :accepted
     else
-      render json: { error: 'user not found' }
+      render json: { error: 'user could not be found' }
     end
   end
 
