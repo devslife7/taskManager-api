@@ -8,8 +8,7 @@ class UsersController < ApplicationController
       token = encode_token({ user_id: user.id })
 
       render json: { user: user, token: token },
-        except: [:created_at, :updated_at, :password_digest],
-        status: :created
+        except: [:created_at, :updated_at, :password_digest], include: [:reports], status: :created
     else
       render json: { error: user.errors }, status: :not_acceptable
     end
@@ -30,10 +29,9 @@ class UsersController < ApplicationController
 
     if user
       user.update(update_params)
-      render json: user,
-        except: [:created_at, :updated_at, :password_digest]
+      render json: user, except: [:created_at, :updated_at, :password_digest], include: [:reports], status: :accepted
     else
-      render json: { error: 'user not found' }
+      render json: { error: 'user could not be found' }
     end
   end
 
