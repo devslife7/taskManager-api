@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
     if project.valid?
       render json: { project: project }, include: [:milestones], except: [:created_at, :updated_at]
     else
-      render json: { error: "Could not create a new Project"}
+      render json: { error: "Could not create a new Project"}, status: :unauthorized
     end
   end
 
