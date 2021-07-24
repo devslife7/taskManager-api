@@ -5,7 +5,10 @@ class Task < ApplicationRecord
   has_many :entries, :dependent => :destroy
 
   def update_progress
-    last_entry_progress = self.entries.last.progress
+    # fixed crash when last entry is deleted
+    entries = self.entries
+    last_entry_progress = entries.empty? ? 0 : entries.last.progress
+
     self.update(progress: last_entry_progress)
   end
 
