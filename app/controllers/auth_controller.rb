@@ -11,7 +11,7 @@ class AuthController < ApplicationController
         include: [:reports],
         status: :accepted
     else
-      render json: { message: 'Invalid username of password' }, status: :unauthorized
+      render json: { error: 'Invalid username or password' }, status: :unauthorized
     end
   end
 
