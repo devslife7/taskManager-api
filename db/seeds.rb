@@ -86,6 +86,11 @@ Task.all.each do |task|
     )
     task.entries << entry
   end
+
+  # updates progress for this task
+  task.update_progress
+  
+  # udpates progress for the whole tree excluding task progress
   task.update_progress_tree
 end
 
