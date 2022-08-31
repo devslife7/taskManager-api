@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-  skip_before_action :authorized, only: [:login]
+  skip_before_action :authorized, only: [:login, :wakeup]
 
   def login
     user = User.find_by(username: user_login_params[:username])
@@ -13,6 +13,10 @@ class AuthController < ApplicationController
     else
       render json: { error: 'Invalid username or password' }, status: :unauthorized
     end
+  end
+
+  def wakeup
+    render json: { message: 'Heroku: I am awake'}
   end
 
   private

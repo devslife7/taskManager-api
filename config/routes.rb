@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/wakeup', to: 'auth#wakeup'
   post '/login', to: 'auth#login'
   resources :users, only: [:create, :show, :update]
   resources :projects, only: [:index, :show, :create, :update, :destroy]
