@@ -1,5 +1,10 @@
 class ApplicationController < ActionController::API
   before_action :authorized
+  skip_before_action :authorized, only: [:homepage]
+
+  def homepage
+    render html: "ProTaskr API Live"
+  end
 
   def encode_token(payload)
     JWT.encode(payload, "Secret", "HS256")
@@ -18,6 +23,6 @@ class ApplicationController < ActionController::API
   end
 
   def authorized
-    render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
+    render json: { message: "Please log in" }, status: :unauthorized unless logged_in?
   end
 end
