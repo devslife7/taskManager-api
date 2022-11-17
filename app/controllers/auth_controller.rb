@@ -11,12 +11,8 @@ class AuthController < ApplicationController
         include: [:reports],
         status: :accepted
     else
-      render json: { error: 'Invalid username or password' }, status: :unauthorized
+      render json: { error: "Invalid username or password" }, status: :unauthorized
     end
-  end
-
-  def wakeup
-    render json: { message: 'Heroku: I am awake'}
   end
 
   private
